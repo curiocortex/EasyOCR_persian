@@ -77,7 +77,7 @@ class Batch_Balanced_Dataset(object):
             _data_loader = torch.utils.data.DataLoader(
                 _dataset, batch_size=_batch_size,
                 shuffle=True,
-                num_workers=int(opt.workers), prefetch_factor=None,
+                num_workers=int(opt.workers),
                 collate_fn=_AlignCollate, pin_memory=True)
             self.data_loader_list.append(_data_loader)
             self.dataloader_iter_list.append(iter(_data_loader))
@@ -102,7 +102,7 @@ class Batch_Balanced_Dataset(object):
                 image, text = next(data_loader_iter)
                 balanced_batch_images.append(image)
                 balanced_batch_texts += text
-            except StopIteration:
+            except Exception:
                 self.dataloader_iter_list[i] = iter(self.data_loader_list[i])
                 image, text = next(self.dataloader_iter_list[i])
                 balanced_batch_images.append(image)
